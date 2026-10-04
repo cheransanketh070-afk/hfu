@@ -1,0 +1,21 @@
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+
+export function Logo({compact=false}:{compact?:boolean}){
+  return <Link href="/" className="brand"><Image src="/hfu-icon.png" alt="HFU Enterprise" width={compact?34:42} height={compact?34:42}/><span><b>HFU</b><small>{compact?'ENTERPRISE':'ENTERPRISE LTD'}</small></span></Link>
+}
+
+export function SiteHeader(){
+ const [open,setOpen]=useState(false);
+ return <header className="site-header"><div className="container nav-wrap"><Logo/><nav className={open?'nav open':'nav'}><Link href="/">Home</Link><Link href="/services">Services</Link><Link href="/fleet">Fleet</Link><Link href="/about">About</Link><Link href="/contact">Contact</Link><Link className="nav-cta" href="/quote">Get a quote <span>↗</span></Link></nav><button className="menu" onClick={()=>setOpen(!open)} aria-label="Toggle menu">{open?'×':'☰'}</button></div></header>
+}
+
+export function SiteFooter(){return <footer className="footer"><div className="container footer-grid"><div><Logo compact/><p className="footer-copy">Speed, security and service without the logistics headache. From urgent same-day jobs to national freight, HFU keeps your delivery moving.</p><a className="phone" href="tel:+441615096152">0161 509 6152</a><a className="email" href="mailto:info@hfuenterprise.com">info@hfuenterprise.com</a></div><div><h4>Explore</h4><Link href="/services">Our services</Link><Link href="/fleet">Our fleet</Link><Link href="/about">About HFU</Link><Link href="/contact">Contact</Link></div><div><h4>Coverage</h4><p>Manchester</p><p>Salford</p><p>Stockport</p><p>Trafford</p><p>Didsbury · Chorlton</p></div><div><h4>Need it moving?</h4><p>Tell us where it starts, where it needs to go, and when. We aim to return a tailored quote within 15 minutes.</p><Link className="footer-btn" href="/quote">Request a quote →</Link></div></div><div className="container footer-bottom"><span>© 2026 HFU Enterprise Ltd. All Rights Reserved.</span><span>880 Manchester Road, Bradford BD5 8DH · Open 24/7</span></div></footer>}
+
+export function QuoteForm(){
+ const [sent,setSent]=useState(false);
+ if(sent) return <div className="success"><div className="success-icon">✓</div><h3>Quote request received</h3><p>Your enquiry has been captured. For an immediate response, call <a href="tel:+441615096152">0161 509 6152</a>.</p><button className="btn btn-dark" onClick={()=>setSent(false)}>Send another enquiry</button></div>
+ return <form className="quote-form" onSubmit={e=>{e.preventDefault();setSent(true)}}><div className="form-head"><span className="eyebrow">QUOTE REQUEST</span><h2>Move it. We’ll handle the rest.</h2><p>Share the essentials and we’ll come back with a tailored delivery option.</p></div><div className="form-grid"><label>Name<input required name="name" placeholder="Your name"/></label><label>Phone<input required name="phone" type="tel" placeholder="07xxx xxxxxx"/></label><label>Email<input required name="email" type="email" placeholder="you@company.com"/></label><label>Delivery type<select name="type" defaultValue=""><option value="" disabled>Select a service</option><option>Same day courier</option><option>Scheduled delivery</option><option>Express / overnight</option><option>Pallet delivery</option><option>International shipping</option><option>Home move</option></select></label><label>Collection postcode<input required name="from" placeholder="M1 1AA"/></label><label>Delivery postcode<input required name="to" placeholder="BD5 8DH"/></label><label>Collection date<input required name="date" type="date"/></label><label>Collection time<select name="time" defaultValue=""><option value="" disabled>Select a window</option><option>ASAP</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label><label className="wide">Vehicle / load details<textarea name="details" rows={4} placeholder="Tell us what is moving, approximate size/weight and anything we should know…"/></label></div><button className="btn btn-primary form-submit" type="submit">Request my quote <span>↗</span></button><p className="form-note">By submitting, you agree that HFU Enterprise may contact you about this enquiry.</p></form>
+}
